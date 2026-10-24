@@ -1,0 +1,47 @@
+{
+  "faculties": [
+    {"code": "informatics", "label": "كلية الهندسة المعلوماتية"},
+    {"code": "mech_elec", "label": "كلية الهندسة الميكانيكية والكهربائية"},
+    {"code": "civil", "label": "كلية الهندسة المدنية"},
+    {"code": "architecture", "label": "كلية الهندسة المعمارية"},
+    {"code": "chemical", "label": "كلية الهندسة الكيميائية والبترولية"},
+    {"code": "agriculture", "label": "كلية الهندسة الزراعية"},
+    {"code": "medicine", "label": "كلية الطب البشري"},
+    {"code": "dentistry", "label": "كلية طب الأسنان"},
+    {"code": "pharmacy", "label": "كلية الصيدلة"},
+    {"code": "health", "label": "كلية العلوم الصحية"},
+    {"code": "nursing", "label": "كلية التمريض"},
+    {"code": "science", "label": "كلية العلوم"},
+    {"code": "economics", "label": "كلية الاقتصاد"},
+    {"code": "law", "label": "كلية الحقوق"},
+    {"code": "arts", "label": "كلية الآداب والعلوم الإنسانية"},
+    {"code": "education", "label": "كلية التربية"},
+    {"code": "tourism", "label": "كلية السياحة"},
+    {"code": "sport", "label": "كلية التربية الرياضية"},
+    {"code": "music_ed", "label": "كلية التربية الموسيقية"}
+  ],
+  "years": [
+    {"code": "prep", "label": "سنة تحضيرية"},
+    {"code": "1", "label": "السنة الأولى"},
+    {"code": "2", "label": "السنة الثانية"},
+    {"code": "3", "label": "السنة الثالثة"},
+    {"code": "4", "label": "السنة الرابعة"},
+    {"code": "5", "label": "السنة الخامسة"},
+    {"code": "6", "label": "السنة السادسة"}
+  ],
+  "studySystems": [
+    {"code": "regular", "label": "تعليم نظامي"},
+    {"code": "parallel", "label": "تعليم موازي"},
+    {"code": "open", "label": "تعليم مفتوح"}
+  ],
+  "specializations": {
+    "informatics": [
+      {"code": "software", "label": "هندسة البرمجيات"},
+      {"code": "networks", "label": "هندسة الشبكات"},
+      {"code": "ai", "label": "الذكاء الاصطناعي"},
+      {"code": "embedded", "label": "النظم المضمنة"},
+      {"code": "general", "label": "لم أحدد اختصاصاً بعد"}
+    ]
+  },
+  "otherLabel": "غير ذلك"
+}

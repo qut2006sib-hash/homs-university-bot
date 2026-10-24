@@ -1,0 +1,290 @@
+{
+  "label": "SYNTHETIC_DEMO",
+  "notice": "Invented rows for exercising the pipeline. Not Homs University regulations.",
+  "sources": [
+    {
+      "id": "src_demo_affairs",
+      "title": "دليل تجريبي مصطنع — شؤون الطلاب",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/student-affairs",
+      "article_or_page": "بند تجريبي SYN-DEMO-01",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_open",
+      "title": "دليل تجريبي مصطنع — التعليم المفتوح",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/open-learning",
+      "article_or_page": "بند تجريبي SYN-DEMO-02",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_parallel",
+      "title": "دليل تجريبي مصطنع — التعليم الموازي",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/parallel",
+      "article_or_page": "بند تجريبي SYN-DEMO-06",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_exams",
+      "title": "دليل تجريبي مصطنع — الامتحانات",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/exams",
+      "article_or_page": "بند تجريبي SYN-DEMO-03",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_docs",
+      "title": "دليل تجريبي مصطنع — الوثائق",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/documents",
+      "article_or_page": "بند تجريبي SYN-DEMO-04",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_fees",
+      "title": "دليل تجريبي مصطنع — الرسوم",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/fees",
+      "article_or_page": "بند تجريبي SYN-DEMO-05",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_retired",
+      "title": "تعميم تجريبي مصطنع — متقاعد",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/retired",
+      "article_or_page": "بند تجريبي SYN-DEMO-RET",
+      "effective_from": "2010-01-01",
+      "effective_to": "2012-01-01",
+      "review_status": "retired"
+    },
+    {
+      "id": "src_demo_draft",
+      "title": "مسودة تجريبية غير معتمدة",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/draft",
+      "article_or_page": "بند تجريبي SYN-DEMO-DRAFT",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "draft"
+    },
+    {
+      "id": "src_demo_conflict_a",
+      "title": "مصدر تجريبي متعارض أ",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/conflict-a",
+      "article_or_page": "بند تجريبي SYN-CONFLICT-A",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    },
+    {
+      "id": "src_demo_conflict_b",
+      "title": "مصدر تجريبي متعارض ب",
+      "issuer": "جهة تجريبية داخل المختبر (ليست جامعة حمص)",
+      "reference": "synthetic://demo/conflict-b",
+      "article_or_page": "بند تجريبي SYN-CONFLICT-B",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "review_status": "approved"
+    }
+  ],
+  "intents": [
+    {
+      "id": "intent_suspension",
+      "code": "suspension",
+      "title_ar": "تعليق التسجيل (تجريبي)",
+      "description_ar": "مثال مصطنع عن اختلاف الجواب حسب نظام الدراسة. ليس قرار تعليق حقيقياً.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_exam_absence",
+      "code": "exam_absence",
+      "title_ar": "الغياب عن الامتحان (تجريبي)",
+      "description_ar": "مثال مصطنع يختلف فيه الجواب حسب السنة داخل الهندسة المعلوماتية.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_transcript",
+      "code": "transcript",
+      "title_ar": "كشف العلامات (تجريبي)",
+      "description_ar": "جواب تجريبي واحد لا يعتمد على السياق.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_fee_pay",
+      "code": "fee_pay",
+      "title_ar": "دفع الرسم (تجريبي)",
+      "description_ar": "موضوع تجريبي قريب لفظياً من الاسترداد، لاختبار أزرار التوضيح.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_fee_refund",
+      "code": "fee_refund",
+      "title_ar": "استرداد الرسم (تجريبي)",
+      "description_ar": "موضوع تجريبي قريب لفظياً من الدفع.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_retired_rule",
+      "code": "retired_rule",
+      "title_ar": "قاعدة تجريبية متقاعدة",
+      "description_ar": "الصيغة معتمدة لكن الجواب متقاعد ويجب ألا يُعرض.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_draft_rule",
+      "code": "draft_rule",
+      "title_ar": "مسودة تجريبية",
+      "description_ar": "جواب غير معتمد ويجب ألا يُعرض.",
+      "status": "approved"
+    },
+    {
+      "id": "intent_conflict_rule",
+      "code": "conflict_rule",
+      "title_ar": "تعارض تجريبي",
+      "description_ar": "جوابان معتمدان متعارضان. يُعلَّم للمراجعة ولا يُختار أحدهما.",
+      "status": "approved"
+    }
+  ],
+  "questions": [
+    {"id": "q_susp_1", "intent_id": "intent_suspension", "wording": "كيف أوقف تسجيلي", "status": "approved"},
+    {"id": "q_susp_2", "intent_id": "intent_suspension", "wording": "بدي أجل الفصل", "status": "approved"},
+    {"id": "q_susp_3", "intent_id": "intent_suspension", "wording": "شو شروط تعليق التسجيل", "status": "approved"},
+    {"id": "q_susp_4", "intent_id": "intent_suspension", "wording": "فيني أعمل وقف تسجيل", "status": "approved"},
+    {"id": "q_susp_5", "intent_id": "intent_suspension", "wording": "كيف فيني أوقف التسجيل", "status": "approved"},
+    {"id": "q_susp_6", "intent_id": "intent_suspension", "wording": "بدي وقف تسجيل", "status": "approved"},
+    {"id": "q_exam_1", "intent_id": "intent_exam_absence", "wording": "غبت عن الامتحان شو بعمل", "status": "approved"},
+    {"id": "q_exam_2", "intent_id": "intent_exam_absence", "wording": "ما قدمت المادة بسبب المرض", "status": "approved"},
+    {"id": "q_exam_3", "intent_id": "intent_exam_absence", "wording": "غياب مبرر عن الامتحان", "status": "approved"},
+    {"id": "q_doc_1", "intent_id": "intent_transcript", "wording": "كيف بجيب كشف علامات", "status": "approved"},
+    {"id": "q_doc_2", "intent_id": "intent_transcript", "wording": "بدي وثيقة علامات", "status": "approved"},
+    {"id": "q_pay_1", "intent_id": "intent_fee_pay", "wording": "كيف بدفع الرسوم الجامعية", "status": "approved"},
+    {"id": "q_pay_2", "intent_id": "intent_fee_pay", "wording": "وين بدفع القسط", "status": "approved"},
+    {"id": "q_pay_3", "intent_id": "intent_fee_pay", "wording": "كيف بدفع الرسوم", "status": "approved"},
+    {"id": "q_ref_1", "intent_id": "intent_fee_refund", "wording": "كيف برجع الرسوم الجامعية", "status": "approved"},
+    {"id": "q_ref_2", "intent_id": "intent_fee_refund", "wording": "بدي استرداد القسط", "status": "approved"},
+    {"id": "q_ref_3", "intent_id": "intent_fee_refund", "wording": "كيف برجع الرسوم", "status": "approved"},
+    {"id": "q_ret_1", "intent_id": "intent_retired_rule", "wording": "شو القاعدة التجريبية الملغاة", "status": "approved"},
+    {"id": "q_draft_1", "intent_id": "intent_draft_rule", "wording": "شو المسودة التجريبية غير المعتمدة", "status": "approved"},
+    {"id": "q_conf_1", "intent_id": "intent_conflict_rule", "wording": "وريني التعارض التجريبي", "status": "approved"}
+  ],
+  "answers": [
+    {
+      "id": "ans_susp_regular",
+      "intent_id": "intent_suspension",
+      "source_id": "src_demo_affairs",
+      "body_ar": "نص مصطنع للتجربة فقط: في مسار التعليم النظامي داخل هذا المختبر، يُقدَّم طلب تعليق التسجيل إلى مكتب تجريبي اسمه «مكتب التجربة أ» خلال الأيام الثلاثة الأولى من شهر تجريبي لا وجود له. هذا الشرط مخترع وليس من أنظمة جامعة حمص.",
+      "status": "approved",
+      "study_system": "regular",
+      "version": 1
+    },
+    {
+      "id": "ans_susp_parallel",
+      "intent_id": "intent_suspension",
+      "source_id": "src_demo_parallel",
+      "body_ar": "نص مصطنع للتجربة فقط: في مسار التعليم الموازي داخل هذا المختبر، طلب تعليق التسجيل يمر عبر «مكتب التجربة ج» برمز وهمي SYN-PAR. هذا الإجراء مخترع وليس من أنظمة جامعة حمص.",
+      "status": "approved",
+      "study_system": "parallel",
+      "version": 1
+    },
+    {
+      "id": "ans_susp_open",
+      "intent_id": "intent_suspension",
+      "source_id": "src_demo_open",
+      "body_ar": "نص مصطنع للتجربة فقط: في مسار التعليم المفتوح داخل هذا المختبر، يُقدَّم الطلب إلى «مكتب التجربة ب» مع رمز وهمي SYN-OPEN. هذا الإجراء مخترع وليس من أنظمة جامعة حمص.",
+      "status": "approved",
+      "study_system": "open",
+      "version": 1
+    },
+    {
+      "id": "ans_exam_y2",
+      "intent_id": "intent_exam_absence",
+      "source_id": "src_demo_exams",
+      "body_ar": "نص مصطنع للتجربة فقط: لطلاب السنة الثانية في الهندسة المعلوماتية ضمن المختبر، الغياب عن الامتحان يُراجع بنموذج وهمي SYN-EXAM-Y2. ليس نظاماً جامعياً.",
+      "status": "approved",
+      "faculty_code": "informatics",
+      "academic_year": "2",
+      "version": 1
+    },
+    {
+      "id": "ans_exam_other",
+      "intent_id": "intent_exam_absence",
+      "source_id": "src_demo_exams",
+      "body_ar": "نص مصطنع للتجربة فقط: لبقية سنوات الهندسة المعلوماتية ضمن المختبر، الغياب يُراجع بنموذج وهمي SYN-EXAM-OTHER. ليس نظاماً جامعياً.",
+      "status": "approved",
+      "faculty_code": "informatics",
+      "version": 1
+    },
+    {
+      "id": "ans_transcript",
+      "intent_id": "intent_transcript",
+      "source_id": "src_demo_docs",
+      "body_ar": "نص مصطنع للتجربة فقط: طلب كشف العلامات في هذا المختبر يتم بنموذج SYN-DOC-1 من دون اختلاف بين الكليات. ليس نظاماً جامعياً.",
+      "status": "approved",
+      "version": 1
+    },
+    {
+      "id": "ans_pay",
+      "intent_id": "intent_fee_pay",
+      "source_id": "src_demo_fees",
+      "body_ar": "نص مصطنع للتجربة فقط: دفع الرسم في المختبر يتم برمز وهمي SYN-PAY. ليس رسماً حقيقياً ولا نظاماً جامعياً.",
+      "status": "approved",
+      "version": 1
+    },
+    {
+      "id": "ans_refund",
+      "intent_id": "intent_fee_refund",
+      "source_id": "src_demo_fees",
+      "body_ar": "نص مصطنع للتجربة فقط: استرداد الرسم في المختبر يتم برمز وهمي SYN-REFUND. ليس نظاماً جامعياً.",
+      "status": "approved",
+      "version": 1
+    },
+    {
+      "id": "ans_retired",
+      "intent_id": "intent_retired_rule",
+      "source_id": "src_demo_retired",
+      "body_ar": "نص مصطنع ملغى: قاعدة قديمة مخترعة SYN-OLD. يجب ألا تُعرض كإرشاد.",
+      "status": "retired",
+      "version": 1
+    },
+    {
+      "id": "ans_draft",
+      "intent_id": "intent_draft_rule",
+      "source_id": "src_demo_draft",
+      "body_ar": "مسودة مصطنعة غير معتمدة SYN-DRAFT. يجب ألا تُعرض كإرشاد.",
+      "status": "draft",
+      "version": 1
+    },
+    {
+      "id": "ans_conflict_a",
+      "intent_id": "intent_conflict_rule",
+      "source_id": "src_demo_conflict_a",
+      "body_ar": "نص مصطنع متعارض أ: الرمز SYN-CONFLICT-A. لا يجوز اعتماد أي من النصين.",
+      "status": "approved",
+      "version": 1
+    },
+    {
+      "id": "ans_conflict_b",
+      "intent_id": "intent_conflict_rule",
+      "source_id": "src_demo_conflict_b",
+      "body_ar": "نص مصطنع متعارض ب: الرمز SYN-CONFLICT-B. لا يجوز اعتماد أي من النصين.",
+      "status": "approved",
+      "version": 1
+    }
+  ]
+}
