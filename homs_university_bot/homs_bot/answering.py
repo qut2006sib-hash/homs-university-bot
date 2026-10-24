@@ -85,6 +85,10 @@ def _eligible(
         if not _window_ok(source.effective_from, source.effective_to, today):
             continue
         usable.append((answer, source))
+    # A newer version replaces the one it supersedes once it is itself servable,
+    # so the old text keeps answering until the new one takes effect.
+    superseded = {answer.supersedes_answer_id for answer, _source in usable if answer.supersedes_answer_id}
+    usable = [pair for pair in usable if pair[0].id not in superseded]
     real = [pair for pair in usable if not (pair[0].is_synthetic or pair[1].is_synthetic)]
     return real or usable
 

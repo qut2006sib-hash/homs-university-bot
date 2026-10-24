@@ -3,27 +3,52 @@
 from __future__ import annotations
 
 import argparse
+import getpass
+import hashlib
+import hmac
+import os
 import re
 import sys
 import uuid
 from datetime import date
+from pathlib import Path
 
-from homs_bot.config import Settings
+from homs_bot.config import Settings, load_dotenv_file
 from homs_bot.db import Store, open_store
 from homs_bot.seed import seed_demo
 
 CODE_RE = re.compile(r"^[a-z][a-z0-9_]{1,40}$")
 STATUSES = ("draft", "approved", "retired")
+MIN_KEY_LENGTH = 12
 
 
-def require_admin() -> None:
-    key = __import__("os").environ.get("HU_ADMIN_KEY", "").strip()
-    if len(key) < 12:
-        print(
-            "مرفوض: أوامر الإدارة تحتاج HU_ADMIN_KEY بطول 12 محرفاً على الأقل.",
-            file=sys.stderr,
+def hash_admin_key(key: str) -> str:
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()
+
+
+def _refuse(reason: str) -> None:
+    print(f"مرفوض: {reason}", file=sys.stderr)
+    raise SystemExit(2)
+
+
+def require_admin(env_path: Path | None = None) -> None:
+    """Compare the key typed for this session with the hash stored in .env.
+
+    The key is read before .env is loaded, so a plain key saved in .env does not
+    unlock the commands by itself.
+    """
+    supplied = os.environ.get("HU_ADMIN_KEY", "").strip()
+    load_dotenv_file(env_path)
+    expected = os.environ.get("HU_ADMIN_KEY_SHA256", "").strip().lower()
+    if not expected:
+        _refuse(
+            "ما في HU_ADMIN_KEY_SHA256 في .env. "
+            "ولّده بالأمر: python -m homs_bot.admin_cli admin-key-hash"
         )
-        raise SystemExit(2)
+    if len(supplied) < MIN_KEY_LENGTH:
+        _refuse(f"أوامر الإدارة تحتاج HU_ADMIN_KEY بطول {MIN_KEY_LENGTH} محرفاً على الأقل.")
+    if not hmac.compare_digest(hash_admin_key(supplied), expected):
+        _refuse("HU_ADMIN_KEY لا يطابق HU_ADMIN_KEY_SHA256.")
 
 
 def _new_id(prefix: str) -> str:
@@ -56,6 +81,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
+    sub.add_parser("admin-key-hash")
     sub.add_parser("intent-list")
     add_intent = sub.add_parser("intent-add")
     add_intent.add_argument("--code", required=True)
@@ -126,6 +152,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == "admin-key-hash":
+        admin_key_hash()
+        return
     require_admin()
     settings = Settings.from_env()
     store = open_store(settings.db_path)
@@ -152,6 +181,15 @@ def main(argv: list[str] | None = None) -> None:
         "delete-context": delete_context,
     }
     commands[args.command](store, args)
+
+
+def admin_key_hash() -> None:
+    key = getpass.getpass("المفتاح الجديد: ").strip()
+    if len(key) < MIN_KEY_LENGTH:
+        raise SystemExit(f"المفتاح لازم يكون {MIN_KEY_LENGTH} محرفاً على الأقل.")
+    if getpass.getpass("أعد كتابة المفتاح: ").strip() != key:
+        raise SystemExit("المفتاحان غير متطابقين.")
+    print(f"HU_ADMIN_KEY_SHA256={hash_admin_key(key)}")
 
 
 def intent_list(store: Store, _args: argparse.Namespace) -> None:
@@ -272,12 +310,14 @@ def answer_add(store: Store, args: argparse.Namespace) -> None:
         raise SystemExit("المصدر غير موجود.")
     if args.status == "approved" and source.review_status != "approved":
         raise SystemExit("لا يمكن اعتماد جواب ومصدره غير معتمد.")
-    if args.supersedes and store.get_answer(args.supersedes) is None:
-        raise SystemExit("الجواب السابق المذكور في --supersedes غير موجود.")
     version = 1
     if args.supersedes:
         previous = store.get_answer(args.supersedes)
-        version = (previous.version if previous else 0) + 1
+        if previous is None:
+            raise SystemExit("الجواب السابق المذكور في --supersedes غير موجود.")
+        if previous.intent_id != intent.id:
+            raise SystemExit("الجواب المذكور في --supersedes تابع لقصد آخر.")
+        version = previous.version + 1
     answer_id = _new_id("ans")
     store.add_answer(
         id=answer_id,
