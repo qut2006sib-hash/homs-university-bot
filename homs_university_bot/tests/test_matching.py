@@ -1,10 +1,11 @@
 """Matching: several wordings, one intent, and clarification when scores are close."""
 
+import io
 import logging
 import os
 
 from homs_bot.llm import DisabledModelProvider
-from homs_bot.logging_config import SecretFilter
+from homs_bot.logging_config import SecretFilter, setup_logging
 from homs_bot.matching import IntentHit, decide_hits
 from homs_bot.models import StudentContext
 from homs_bot.pipeline import ask
@@ -144,6 +145,30 @@ class ExtensionPointsTest(StoreTestCase):
         self.assertNotIn("SUPERSECRET", record.getMessage())
         self.assertIn("[REDACTED]", record.getMessage())
         del os.environ["TELEGRAM_BOT_TOKEN"]
+
+    def test_child_logger_records_and_tracebacks_are_redacted(self) -> None:
+        root = logging.getLogger()
+        stream = io.StringIO()
+        handler = logging.StreamHandler(stream)
+        root.addHandler(handler)
+        os.environ["TELEGRAM_BOT_TOKEN"] = "999:SUPERSECRET"
+        try:
+            setup_logging(make_settings())
+            logging.getLogger("aiogram.event").error(
+                "request to https://api.telegram.org/bot999:SUPERSECRET/getUpdates failed"
+            )
+            try:
+                raise RuntimeError("url bot999:SUPERSECRET")
+            except RuntimeError:
+                logging.getLogger("homs_bot.handlers").exception("handler failed")
+        finally:
+            root.removeHandler(handler)
+            del os.environ["TELEGRAM_BOT_TOKEN"]
+        output = stream.getvalue()
+        self.assertIn("getUpdates failed", output)
+        self.assertIn("RuntimeError", output)
+        self.assertNotIn("SUPERSECRET", output)
+        self.assertGreaterEqual(output.count("[REDACTED]"), 2)
 
 
 class SettingsGuardTest(StoreTestCase):

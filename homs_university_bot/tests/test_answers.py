@@ -89,6 +89,64 @@ class ApprovedAnswerTest(StoreTestCase):
         self.assertEqual([item.id for item in history], ["ans_old", "ans_old_v2"])
         self.assertEqual(history[0].status, "retired")
 
+    def test_approved_replacement_serves_without_retiring_the_old_version(self) -> None:
+        add_real(self.store, code="ver", wording="شو النظام الحالي", body="النسخة الأولى")
+        self.store.add_answer(
+            id="ans_ver_v2",
+            intent_id="intent_ver",
+            source_id="src_ver",
+            body_ar="النسخة الثانية المصححة",
+            status="approved",
+            version=2,
+            supersedes_answer_id="ans_ver",
+            effective_from="2020-01-01",
+        )
+        self.store.add_answer(
+            id="ans_ver_v3",
+            intent_id="intent_ver",
+            source_id="src_ver",
+            body_ar="النسخة الثالثة",
+            status="approved",
+            version=3,
+            supersedes_answer_id="ans_ver_v2",
+            effective_from="2027-01-01",
+        )
+
+        before = ask(
+            self.store,
+            self.settings,
+            telegram_user_id=1,
+            text="شو النظام الحالي",
+            today=date(2026, 6, 1),
+        )
+        self.assertEqual(before.outcome, "answered")
+        self.assertEqual(before.answer_id, "ans_ver_v2")
+
+        after = ask(
+            self.store,
+            self.settings,
+            telegram_user_id=1,
+            text="شو النظام الحالي",
+            today=date(2027, 6, 1),
+        )
+        self.assertEqual(after.outcome, "answered")
+        self.assertEqual(after.answer_id, "ans_ver_v3")
+        self.assertEqual(self.store.get_answer("ans_ver").status, "approved")
+
+    def test_draft_replacement_keeps_the_old_version_live(self) -> None:
+        add_real(self.store, code="pend", wording="شو النظام المعلق", body="النسخة المعتمدة")
+        self.store.add_answer(
+            id="ans_pend_v2",
+            intent_id="intent_pend",
+            source_id="src_pend",
+            body_ar="مسودة بديلة",
+            status="draft",
+            version=2,
+            supersedes_answer_id="ans_pend",
+        )
+        result = ask(self.store, self.settings, telegram_user_id=1, text="شو النظام المعلق")
+        self.assertEqual(result.answer_id, "ans_pend")
+
     def test_retired_without_replacement_is_not_invented(self) -> None:
         add_real(self.store, code="gone", wording="قاعدة ملغاة بالكامل", body="نص ملغى")
         self.store.set_answer_status("ans_gone", "retired")

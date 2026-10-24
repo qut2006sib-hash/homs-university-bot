@@ -3,15 +3,32 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from dataclasses import replace
+from pathlib import Path
 
 from homs_bot.catalog import load_catalog
-from homs_bot.config import Settings
+from homs_bot.config import PROJECT_ROOT, Settings
 from homs_bot.db import open_store
 from homs_bot.models import StudentContext
 from homs_bot.pipeline import ask, dumps_result, record_feedback, reject_clarification
 from homs_bot.seed import seed_demo
+
+LAB_DB_DEFAULT = PROJECT_ROOT / "data" / "lab.sqlite"
+
+
+def lab_db_path(settings: Settings) -> str:
+    """The lab seeds demo rows and rewrites contexts, so it never opens the bot database."""
+    path = os.environ.get("HU_LAB_DB_PATH", "").strip() or str(LAB_DB_DEFAULT)
+    if path != ":memory:" and Path(path).resolve() == Path(settings.db_path).resolve():
+        print(
+            "مرفوض: HU_LAB_DB_PATH يشير إلى قاعدة البوت نفسها (HU_DB_PATH). "
+            "المختبر يحمّل بيانات مصطنعة ويعدّل السياق، فلازم يكون له ملف مستقل.",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+    return path
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -29,6 +46,7 @@ def main(argv: list[str] | None = None) -> None:
     raw = sys.stdin.read().strip()
     payload = json.loads(raw) if raw else {}
     settings = Settings.from_env()
+    settings = replace(settings, db_path=lab_db_path(settings))
     if "allowSynthetic" in payload:
         settings = replace(settings, allow_synthetic=bool(payload["allowSynthetic"]))
     store = open_store(settings.db_path)
